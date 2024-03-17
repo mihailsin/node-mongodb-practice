@@ -15,6 +15,9 @@ async function run() {
         const customers = db.collection('customers');
         const transactions = db.collection('transactions');
 
+        const db1 = client.db('sample_airbnb');
+        const listingsAndReviews = db1.collection('listingsAndReviews');
+
         let pipeline;
         // --------------------------- $group
 
@@ -29,12 +32,12 @@ async function run() {
         // ----------------------------$count
 
         // will count all documents in collection, since there is no any filter applied
-        pipeline = [{ $count: 'allDocuments' }]; // value will become a key in the result object
-        await printAggregationResult(transactions, pipeline);
+        // pipeline = [{ $count: 'allDocuments' }]; // value will become a key in the result object
+        // await printAggregationResult(transactions, pipeline);
 
         // will count filtered and grouped documents
-        pipeline = [{ $match: { transaction_count: { $gt: 20 } } }, { $group: { _id: '$transaction_count' } }, { $count: 'resultsCount' }];
-        await printAggregationResult(transactions, pipeline);
+        // pipeline = [{ $match: { transaction_count: { $gt: 20 } } }, { $group: { _id: '$transaction_count' } }, { $count: 'resultsCount' }];
+        // await printAggregationResult(transactions, pipeline);
 
         // -----------------------------$sort
         // -1 - desc; 1 - asc;
@@ -90,6 +93,24 @@ async function run() {
         // await printAggregationResult(transactions, pipeline);
 
         //------------------------------------$unwind
+
+        // each document will contain one value from 'products' array;
+        // pipeline = [{ $unwind: '$products' }];
+        // await printAggregationResult(accounts, pipeline);
+
+        // pipeline = [{ $unwind: '$products' }, { $group: { _id: '$products' } }];
+        // await printAggregationResult(accounts, pipeline);
+
+        // ---------------------------------accumulators
+        // count quantity of grouped documents
+        // pipeline = [{ $match: { transaction_count: { $lt: 20 } } }, { $group: { _id: '$transaction_count', count: { $sum: 1 } } }, { $sort: { _id: -1 } }];
+        // await printAggregationResult(transactions, pipeline);
+
+        // pipeline = [{ $unwind: '$products' }, { $group: { _id: '$products', count: { $sum: 1 } } }];
+        // await printAggregationResult(accounts, pipeline);
+
+        pipeline = [{ $group: { _id: '$bedrooms', count: { $sum: 1 }, averageBeds: { $avg: '$beds' } } }, { $sort: { _id: -1 } }];
+        await printAggregationResult(listingsAndReviews, pipeline);
     } finally {
         await client.close();
     }
