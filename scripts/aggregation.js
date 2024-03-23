@@ -1,12 +1,6 @@
-const client = require('../db/client');
+const { client } = require('../db/clients');
+const { printAggregationResult } = require('../db/utils');
 
-async function printAggregationResult(collection, pipeline) {
-    const cursor = collection.aggregate(pipeline);
-
-    for await (const doc of cursor) {
-        console.dir(doc);
-    }
-}
 async function run() {
     try {
         await client.connect();
