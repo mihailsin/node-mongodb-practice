@@ -234,10 +234,104 @@ const { printAggregationResult, printResults } = require('../db/utils');
         // await printResults(cursor);
 
         // Write a MongoDB query to find the restaurants that have a grade with a score of 2 and a grade with a score of 6 and are located in the borough of Manhattan or Brooklyn, and their cuisine is not American or Chinese.
-        cursor = restaurants.find({
-            $and: [{ 'grades.score': 2 }, { 'grades.score': 6 }, { borough: { $in: ['Manhattan', 'Brooklyn'] } }, { cuisine: { $nin: ['American', 'Chinese'] } }],
-        });
-        await printResults(cursor);
+        // cursor = restaurants.find({
+        //     $and: [{ 'grades.score': 2 }, { 'grades.score': 6 }, { borough: { $in: ['Manhattan', 'Brooklyn'] } }, { cuisine: { $nin: ['American', 'Chinese'] } }],
+        // });
+        // await printResults(cursor);
+
+        // 48. Write a MongoDB query to find the restaurants that have all grades with a score greater than 5.
+        // cursor = restaurants.find({ grades: { $not: { $elemMatch: { score: { $lt: 5 } } } } });
+        // await printResults(cursor);
+
+        // 49. Write a MongoDB query to find the restaurants that have all grades with a score greater than 5 and are located in the borough of Manhattan.
+        // cursor = restaurants.find({ grades: { $not: { $elemMatch: { score: { $lt: 5 } } } }, borough: 'Manhattan' });
+        // await printResults(cursor);
+
+        // 50. Write a MongoDB query to find the restaurants that have all grades with a score greater than 5 and are located in the borough of Manhattan or Brooklyn.
+        // cursor = restaurants.find({ grades: { $not: { $elemMatch: { score: { $lt: 5 } } } }, borough: { $in: ['Manhattan', 'Brooklyn'] } });
+        // await printResults(cursor);
+
+        // ---------------------------------------------Aggregations-------------------------------------------------------
+
+        // 51. Write a MongoDB query to find the average score for each restaurant.
+        // pipeline = [{ $unwind: '$grades' }, { $group: { _id: '$name', averageScore: { $avg: '$grades.score' } } }];
+        // await printAggregationResult(restaurants, pipeline);
+
+        // 52. Write a MongoDB query to find the highest score for each restaurant.
+        // pipeline = [{ $unwind: '$grades' }, { $group: { _id: '$name', averageScore: { $max: '$grades.score' } } }];
+        // await printAggregationResult(restaurants, pipeline);
+
+        // 53. Write a MongoDB query to find the lowest score for each restaurant.
+        pipeline = [{ $unwind: '$grades' }, { $group: { _id: '$name', averageScore: { $min: '$grades.score' } } }];
+        await printAggregationResult(restaurants, pipeline);
+
+        // 54. Write a MongoDB query to find the count of restaurants in each borough.
+
+        // 55. Write a MongoDB query to find the count of restaurants for each cuisine.
+
+        // 56. Write a MongoDB query to find the count of restaurants for each cuisine and borough.
+
+        // 57. Write a MongoDB query to find the count of restaurants that received a grade of 'A' for each cuisine.
+
+        // 58. Write a MongoDB query to find the count of restaurants that received a grade of 'A' for each borough.
+
+        // 59. Write a MongoDB query to find the count of restaurants that received a grade of 'A' for each cuisine and borough.
+
+        // 60. Write a MongoDB query to find the number of restaurants that have been graded in each month of the year.
+
+        // 61. Write a MongoDB query to find the average score for each cuisine.
+
+        // 62. Write a MongoDB query to find the highest score for each cuisine.
+
+        // 63. Write a MongoDB query to find the lowest score for each cuisine.
+
+        // 64. Write a MongoDB query to find the average score for each borough.
+
+        // 65. Write a MongoDB query to find the highest score for each borough.
+
+        // 66. Write a MongoDB query to find the lowest score for each borough.
+
+        // 67. Write a MongoDB query to find the name and address of the restaurants that received a grade of 'A' on a specific date.
+
+        // 68. Write a MongoDB query to find the name and address of the restaurants that received a grade of 'B' or 'C' on a specific date.
+
+        // 69. Write a MongoDB query to find the name and address of the restaurants that have at least one 'A' grade and one 'B' grade.
+
+        // 70. Write a MongoDB query to find the name and address of the restaurants that have at least one 'A' grade and no 'B' grades.
+
+        // 71. Write a MongoDB query to find the name ,address and grades of the restaurants that have at least one 'A' grade and no 'C' grades.
+
+        // 72. Write a MongoDB query to find the name, address, and grades of the restaurants that have at least one 'A' grade, no 'B' grades, and no 'C' grades.
+
+        // 73. Write a MongoDB query to find the name and address of the restaurants that have the word 'coffee' in their name.
+
+        // 74. Write a MongoDB query to find the name and address of the restaurants that have a zipcode that starts with '10'.
+
+        // 75. Write a MongoDB query to find the name and address of the restaurants that have a cuisine that starts with the letter 'B'.
+
+        // 76. Write a MongoDB query to find the name, address, and cuisine of the restaurants that have a cuisine that ends with the letter 'y'.
+
+        // 77. Write a MongoDB query to find the name, address, and cuisine of the restaurants that have a cuisine that contains the word 'Pizza'.
+
+        // 78. Write a MongoDB query to find the restaurants achieved highest average score.
+
+        // 79. Write a MongoDB query to find all the restaurants with the highest number of "A" grades.
+
+        // 80. Write a MongoDB query to find the cuisine type that is most likely to receive a "C" grade.
+
+        // 81. Write a MongoDB query to find the restaurant that has the highest average score for thecuisine "Turkish".
+
+        // 82. Write a MongoDB query to find the restaurants that achieved the highest total score.
+
+        // Write a MongoDB query to find all the Chinese restaurants in Brooklyn.
+
+        // Write a MongoDB query to find the restaurant with the most recent grade date.
+
+        // Write a MongoDB query to find the top 5 restaurants with the highest average score for each cuisine type, along with their average scores.
+
+        // Write a MongoDB query to find the top 5 restaurants in each borough with the highest number of "A" grades.
+
+        // Write a MongoDB query to find the borough with the highest number of restaurants that have a grade of "A" and a score greater than or equal to 90.
     } catch (error) {
         console.dir(error);
     } finally {
