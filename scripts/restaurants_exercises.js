@@ -1,6 +1,7 @@
 const { client } = require('../db/clients');
 const { printAggregationResult, printResults } = require('../db/utils');
 
+// https://www.w3resource.com/mongodb-exercises/#MongoDB_restaurants
 // {
 //   "address": {
 //      "building": "1007",
@@ -262,34 +263,71 @@ const { printAggregationResult, printResults } = require('../db/utils');
         // await printAggregationResult(restaurants, pipeline);
 
         // 53. Write a MongoDB query to find the lowest score for each restaurant.
-        pipeline = [{ $unwind: '$grades' }, { $group: { _id: '$name', averageScore: { $min: '$grades.score' } } }];
-        await printAggregationResult(restaurants, pipeline);
+        // pipeline = [{ $unwind: '$grades' }, { $group: { _id: '$name', averageScore: { $min: '$grades.score' } } }];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 54. Write a MongoDB query to find the count of restaurants in each borough.
+        // pipeline = [{ $group: { _id: '$borough', count: { $sum: 1 } } }];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 55. Write a MongoDB query to find the count of restaurants for each cuisine.
+        // pipeline = [{ $group: { _id: '$cuisine', count: { $sum: 1 } } }];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 56. Write a MongoDB query to find the count of restaurants for each cuisine and borough.
+        // pipeline = [{ $group: { _id: { cui: '$cuisine', bor: '$borough' }, count: { $sum: 1 } } }];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 57. Write a MongoDB query to find the count of restaurants that received a grade of 'A' for each cuisine.
+        // pipeline = [
+        //     {
+        //         $unwind: '$grades',
+        //     },
+        //     { $match: { 'grades.grade': 'A' } },
+        //     { $group: { _id: '$cuisine', count: { $sum: 1 } } },
+        // ];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 58. Write a MongoDB query to find the count of restaurants that received a grade of 'A' for each borough.
+        // pipeline = [
+        //     {
+        //         $unwind: '$grades',
+        //     },
+        //     { $match: { 'grades.grade': 'A' } },
+        //     { $group: { _id: '$borough', count: { $sum: 1 } } },
+        // ];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 59. Write a MongoDB query to find the count of restaurants that received a grade of 'A' for each cuisine and borough.
+        // pipeline = [{ $unwind: '$grades' }, { $match: { 'grades.grade': 'A' } }, { $group: { _id: { cuisine: '$cuisine', borough: '$borough' }, count: { $sum: 1 } } }];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 60. Write a MongoDB query to find the number of restaurants that have been graded in each month of the year.
+        // ???!!!
 
         // 61. Write a MongoDB query to find the average score for each cuisine.
+        // pipeline = [{ $unwind: '$grades' }, { $group: { _id: '$cuisine', averageScore: { $avg: '$grades.score' } } }];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 62. Write a MongoDB query to find the highest score for each cuisine.
+        // pipeline = [{ $unwind: '$grades' }, { $group: { _id: '$cuisine', highestScore: { $max: '$grades.score' } } }];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 63. Write a MongoDB query to find the lowest score for each cuisine.
+        // pipeline = [{ $unwind: '$grades' }, { $group: { _id: '$cuisine', lowestScore: { $min: '$grades.score' } } }];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 64. Write a MongoDB query to find the average score for each borough.
+        // pipeline = [{ $unwind: '$grades' }, { $group: { _id: '$borough', avgScore: { $avg: '$grades.score' } } }];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 65. Write a MongoDB query to find the highest score for each borough.
+        // pipeline = [{ $unwind: '$grades' }, { $group: { _id: '$borough', highestScore: { $max: '$grades.score' } } }];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 66. Write a MongoDB query to find the lowest score for each borough.
+        // pipeline = [{ $unwind: '$grades' }, { $group: { _id: '$borough', lowestScore: { $min: '$grades.score' } } }];
+        // await printAggregationResult(restaurants, pipeline);
 
         // 67. Write a MongoDB query to find the name and address of the restaurants that received a grade of 'A' on a specific date.
 
